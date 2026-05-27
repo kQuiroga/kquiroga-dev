@@ -1,11 +1,17 @@
 ---
 interface Props {
   label: string;
+  variant?: 'solid' | 'ghost';
 }
 
-const { label } = Astro.props;
+const { label, variant = 'solid' } = Astro.props;
+
+const solidClasses = "bg-[var(--color-surface)] text-[var(--color-ink)] border border-[var(--color-border)]";
+const ghostClasses = "bg-transparent text-[var(--color-ink-muted)] border border-[var(--color-border)]";
+
+const variantClasses = variant === 'ghost' ? ghostClasses : solidClasses;
 ---
 
-<span class="text-xs font-medium bg-neutral-100 text-neutral-600 rounded-full px-3 py-1 tracking-wide">
+<span class={`text-xs font-medium font-mono rounded px-3 py-1 tracking-wide ${variantClasses}`}>
   {label}
 </span>

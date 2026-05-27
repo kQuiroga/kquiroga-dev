@@ -15,6 +15,14 @@ export interface TranslationShape {
     tagline: string;
     primaryCta: string;
     secondaryCta: string;
+    manifest: {
+      whoami: string;
+      name: string;
+      role: string;
+      location: string;
+      focus: string;
+      status: string;
+    };
   };
   about: {
     heading: string;
@@ -58,6 +66,14 @@ export const en: TranslationShape = {
     tagline: 'Designing distributed systems that scale and teams that grow.',
     primaryCta: 'View my work',
     secondaryCta: 'Get in touch',
+    manifest: {
+      whoami: '$ whoami',
+      name: '> name      : Kevin Quiroga',
+      role: '> role      : software_architect',
+      location: '> location  : A_Coruña, ES',
+      focus: '> focus     : distributed_systems · clean_architecture',
+      status: '> status    : open_to_work',
+    },
   },
   about: {
     heading: 'About',

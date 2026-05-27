@@ -35,7 +35,8 @@ const links = [
           <li>
             <a
               href={href}
-              class="text-sm text-neutral-500 transition-colors hover:text-neutral-900"
+              class="nav-link font-mono text-sm transition-colors"
+              style="color: var(--color-ink-muted);"
             >
               {label}
             </a>
@@ -48,3 +49,43 @@ const links = [
     </div>
   </nav>
 </header>
+
+<!-- Scroll-spy: accent placement #2 (active nav underline) -->
+<script>
+  (function () {
+    const sections = document.querySelectorAll<HTMLElement>('section[id]');
+    const navLinks = document.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]');
+
+    if (!sections.length || !navLinks.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            navLinks.forEach((link) => {
+              const active = link.getAttribute('href') === '#' + entry.target.id;
+              if (active) {
+                link.dataset.active = 'true';
+              } else {
+                delete link.dataset.active;
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+  })();
+</script>
+
+<style>
+  /* Accent placement #2: active nav underline — scoped to Nav.astro */
+  nav a[data-active="true"] {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+  }
+</style>

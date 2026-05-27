@@ -9,21 +9,68 @@ interface Props {
 }
 
 const { t } = Astro.props;
+
+const primaryGroups = skillGroups.filter(g => g.tier === 'primary');
+const secondaryGroups = skillGroups.filter(g => g.tier === 'secondary');
+
+// Section numbers for primary groups
+const primaryNumbers: Record<string, string> = {
+  Backend: '01',
+  Architecture: '02',
+};
 ---
 
-<section id="skills" aria-labelledby="skills-heading" class="reveal bg-neutral-50 px-6 py-24">
+<section id="skills" aria-labelledby="skills-heading" class="reveal px-6 py-24" style="background-color: var(--color-surface);">
   <div class="mx-auto max-w-5xl">
     <SectionHeading id="skills" title={t.heading} />
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {skillGroups.map((group) => (
+
+    <!-- Primary tier — Backend + Architecture (elevated) -->
+    <div class="mb-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+      {primaryGroups.map((group) => {
+        const num = primaryNumbers[group.category] ?? '01';
+        const isBackend = group.category === 'Backend';
+        return (
+          <div
+            class={`pl-4 ${isBackend ? 'border-l-2' : 'border-l border-[var(--color-border)]'}`}
+            style={isBackend ? 'border-left-color: var(--color-accent);' : ''}
+          >
+            <!-- Category header: / 01 Backend -->
+            <h3 class="mb-4 font-mono text-xs uppercase tracking-widest" style="color: var(--color-ink-muted);">
+              {isBackend ? (
+                <>
+                  <span style="color: var(--color-accent-strong);">/ {num}</span>
+                  {' '}{group.category}
+                </>
+              ) : (
+                <>
+                  <span style="color: var(--color-ink);">/ {num}</span>
+                  {' '}{group.category}
+                </>
+              )}
+            </h3>
+            <ul class="flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <li>
+                  <Pill label={skill} variant="solid" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Secondary tier — supporting categories -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {secondaryGroups.map((group) => (
         <div>
-          <h3 class="mb-3 text-sm font-semibold text-neutral-900 uppercase tracking-wide">
+          <h3 class="mb-3 font-mono text-xs uppercase tracking-widest" style="color: var(--color-ink-muted); font-size: 0.7rem;">
             {group.category}
           </h3>
           <ul class="flex flex-wrap gap-2">
             {group.skills.map((skill) => (
               <li>
-                <Pill label={skill} />
+                <Pill label={skill} variant="ghost" />
               </li>
             ))}
           </ul>

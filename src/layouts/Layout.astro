@@ -62,6 +62,21 @@ const personSchema = {
       <link rel="canonical" href={canonical} />
     )}
 
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="/fonts/fraunces-latin-wght-normal.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="/fonts/jetbrains-mono-latin-wght-normal.woff2"
+    />
+
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   </head>
   <body class="bg-white text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white">

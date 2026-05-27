@@ -1,5 +1,6 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
+import Icon from "../ui/Icon.astro";
 import { socials } from "../../data/socials";
 import type { TranslationShape } from '../../i18n/en';
 
@@ -14,16 +15,18 @@ const { t } = Astro.props;
   <div class="mx-auto max-w-5xl">
     <SectionHeading id="contact" title={t.heading} />
     <div class="max-w-2xl">
-      <p class="mb-8 text-base sm:text-lg text-neutral-600">
+      <p class="mb-8 text-base sm:text-lg leading-relaxed text-ink-soft">
         {t.intro}
       </p>
+      <!-- CTA email button — accent placement #4 -->
       <a
         href="mailto:kevin.quiroga.sanchez@gmail.com"
-        class="inline-block rounded-md bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 mb-10"
+        class="inline-block rounded-md px-5 py-2.5 text-sm font-medium text-white bg-accent hover:bg-accent-strong transition-colors mb-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
         {t.emailCta}
       </a>
-      <ul class="flex flex-wrap gap-4">
+      <!-- Social icon + shortLabel row -->
+      <ul class="flex flex-wrap gap-5">
         {socials.map((s) => (
           <li>
             <a
@@ -31,9 +34,10 @@ const { t } = Astro.props;
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              class="text-sm text-neutral-600 underline underline-offset-2 hover:text-neutral-900 transition-colors"
+              class="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink transition-colors font-mono"
             >
-              {s.label}
+              <Icon name={s.icon} size={16} />
+              {s.shortLabel}
             </a>
           </li>
         ))}

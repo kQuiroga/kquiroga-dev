@@ -17,6 +17,14 @@ export const es: TranslationShape = {
     tagline: 'Diseñando sistemas distribuidos que escalan y equipos que crecen.',
     primaryCta: 'Ver mi trabajo',
     secondaryCta: 'Contactar',
+    manifest: {
+      whoami: '$ whoami',
+      name: '> nombre    : Kevin Quiroga',
+      role: '> rol       : software_architect',
+      location: '> ubicación : A Coruña, ES',
+      focus: '> foco      : sistemas_distribuidos · arquitectura_limpia',
+      status: '> estado    : abierto_a_trabajo',
+    },
   },
   about: {
     heading: 'Sobre mí',

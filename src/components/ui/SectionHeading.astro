@@ -3,14 +3,22 @@ interface Props {
   id: string;
   title: string;
   eyebrow?: string;
+  number?: string;
 }
 
-const { id, title, eyebrow } = Astro.props;
+const { id, title, eyebrow, number } = Astro.props;
 ---
 
-{eyebrow && (
-  <p class="text-sm uppercase tracking-wide text-neutral-400 mb-2">{eyebrow}</p>
+{(eyebrow || number) && (
+  <p class="text-sm uppercase tracking-wide font-mono mb-2" style="color: var(--color-ink-muted)">
+    {number && <span class="font-mono text-xs mr-2" style="color: var(--color-ink-muted)">/ {number}</span>}
+    {eyebrow}
+  </p>
 )}
-<h2 id={`${id}-heading`} class="text-3xl sm:text-4xl font-bold tracking-tighter text-neutral-900 mb-12">
+<h2
+  id={`${id}-heading`}
+  class="text-3xl sm:text-4xl font-bold tracking-tighter font-display mb-12"
+  style="color: var(--color-ink)"
+>
   {title}
 </h2>

@@ -9,14 +9,14 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<section id="about" aria-labelledby="about-heading" class="reveal bg-neutral-50 px-6 py-24">
+<section id="about" aria-labelledby="about-heading" class="reveal px-6 py-24" style="background-color: var(--color-surface);">
   <div class="mx-auto max-w-5xl">
     <SectionHeading id="about" title={t.heading} />
     <div class="max-w-2xl space-y-4">
-      <p class="text-base sm:text-lg leading-relaxed text-neutral-600">
+      <p class="font-display text-base sm:text-lg leading-relaxed text-ink-soft">
         {t.p1}
       </p>
-      <p class="text-base sm:text-lg leading-relaxed text-neutral-600">
+      <p class="font-display text-base sm:text-lg leading-relaxed text-ink-soft">
         {t.p2}
       </p>
     </div>

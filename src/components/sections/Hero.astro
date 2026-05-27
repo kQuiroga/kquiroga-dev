@@ -1,40 +1,136 @@
 ---
 import type { TranslationShape } from '../../i18n/en';
+import Icon from '../ui/Icon.astro';
+import { socials } from '../../data/socials';
 
 interface Props {
   t: TranslationShape['hero'];
 }
 
 const { t } = Astro.props;
+
+const manifestLines = [
+  { key: 'whoami', text: t.manifest.whoami },
+  { key: 'name', text: t.manifest.name },
+  { key: 'role', text: t.manifest.role },
+  { key: 'location', text: t.manifest.location },
+  { key: 'focus', text: t.manifest.focus },
+  { key: 'status', text: t.manifest.status },
+];
 ---
 
 <section class="flex min-h-screen flex-col justify-center px-6 pt-14">
   <div class="mx-auto max-w-5xl w-full">
-    <p class="mb-6 text-sm font-medium tracking-widest text-neutral-400 uppercase">
-      {t.location}
-    </p>
-    <h1 class="mb-6 text-6xl sm:text-8xl font-bold tracking-tighter text-neutral-900 leading-none">
+    <!-- Name — Fraunces display serif -->
+    <h1 class="mb-4 text-6xl sm:text-8xl font-bold tracking-tighter leading-none" style="font-family: var(--font-display); color: var(--color-ink);">
       Kevin<br />Quiroga
     </h1>
-    <p class="mb-4 text-lg sm:text-xl text-neutral-500 font-medium">
+
+    <!-- Role eyebrow — JetBrains Mono -->
+    <p class="mb-8 font-mono text-sm" style="color: var(--color-ink-muted);">
       {t.role}
     </p>
-    <p class="mb-12 max-w-lg text-base text-neutral-400 leading-relaxed">
-      {t.tagline}
-    </p>
+
+    <!-- Typed manifest block — SSR-rendered, full text always in DOM -->
+    <pre
+      data-manifest
+      class="mb-8 font-mono text-sm leading-relaxed overflow-x-auto"
+      style="color: var(--color-ink);"
+      aria-label="Developer manifest"
+    >{manifestLines.map((line, i) => (
+      <span
+        data-line
+        data-text={line.text}
+        class="block"
+      >{line.text}{i === manifestLines.length - 1 && (
+        <span class="caret" aria-hidden="true">▮</span>
+      )}</span>
+    ))}</pre>
+
+    <!-- Social icon links -->
+    <div class="mb-10 flex items-center gap-5">
+      {socials.map((s) => (
+        <a
+          href={s.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={s.label}
+          class="inline-flex items-center gap-2 font-mono text-sm transition-colors"
+          style="color: var(--color-ink-muted);"
+        >
+          <Icon name={s.icon} size={16} />
+          {s.shortLabel}
+        </a>
+      ))}
+    </div>
+
+    <!-- CTAs -->
     <div class="flex flex-wrap gap-3">
+      <!-- Primary CTA — neutral-900 fill (accent reserved for hero caret only) -->
       <a
         href="#projects"
-        class="rounded-md bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+        class="rounded-md px-6 py-3 text-sm font-medium text-white transition-colors hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        style="background-color: var(--color-ink);"
       >
         {t.primaryCta}
       </a>
+      <!-- Secondary CTA — ghost -->
       <a
         href="#contact"
-        class="rounded-md border border-neutral-200 px-6 py-3 text-sm font-medium text-neutral-600 transition-colors hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+        class="rounded-md border px-6 py-3 text-sm font-medium transition-colors hover:border-current hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        style="border-color: var(--color-border); color: var(--color-ink-soft);"
       >
         {t.secondaryCta}
       </a>
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    if (
+      'IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      const pre = document.querySelector('[data-manifest]');
+      if (!pre) return;
+
+      const lines = pre.querySelectorAll<HTMLElement>('[data-line]');
+      let delay = 0;
+
+      lines.forEach((line, idx) => {
+        const text = line.dataset.text || '';
+        const isLast = idx === lines.length - 1;
+
+        // Capture the caret span if on last line
+        const caretSpan = isLast ? line.querySelector('.caret') : null;
+
+        // Clear text content (keep caret span in DOM for last line)
+        if (isLast && caretSpan) {
+          line.textContent = '';
+          line.appendChild(caretSpan);
+        } else {
+          line.textContent = '';
+        }
+
+        setTimeout(() => {
+          let i = 0;
+          const tick = setInterval(() => {
+            i++;
+            if (isLast && caretSpan) {
+              // Insert text node before caret
+              caretSpan.remove();
+              line.textContent = text.slice(0, i);
+              line.appendChild(caretSpan);
+            } else {
+              line.textContent = text.slice(0, i);
+            }
+            if (i >= text.length) clearInterval(tick);
+          }, 28);
+        }, delay);
+
+        delay += text.length * 28 + 120;
+      });
+    }
+  })();
+</script>
