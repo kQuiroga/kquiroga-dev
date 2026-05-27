@@ -64,21 +64,21 @@ const manifestLines = [
 
     <!-- CTAs -->
     <div class="flex flex-wrap gap-3">
-      <!-- Primary CTA — neutral-900 fill (accent reserved for hero caret only) -->
+      <!-- Primary CTA — ink fill, sharp corners (accent reserved for hero caret only) -->
       <a
         href="#projects"
-        class="rounded-md px-6 py-3 text-sm font-medium text-white transition-colors hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        class="inline-flex items-center justify-center rounded-none px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-ink-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
         style="background-color: var(--color-ink);"
       >
         {t.primaryCta}
       </a>
-      <!-- Secondary CTA — ghost -->
+      <!-- Secondary CTA — mailto text+arrow, no box -->
       <a
-        href="#contact"
-        class="rounded-md border px-6 py-3 text-sm font-medium transition-colors hover:border-current hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        style="border-color: var(--color-border); color: var(--color-ink-soft);"
+        href="mailto:kevin.quiroga.sanchez@gmail.com"
+        class="group inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        style="color: var(--color-ink-soft);"
       >
-        {t.secondaryCta}
+        {t.secondaryCta}<span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
       </a>
     </div>
   </div>

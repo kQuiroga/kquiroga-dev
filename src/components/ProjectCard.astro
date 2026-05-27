@@ -1,24 +1,24 @@
 ---
 import type { Project } from "../data/projects";
 import type { Locale } from "../i18n/index";
-import Pill from "./ui/Pill.astro";
 
 interface Props {
   project: Project;
   locale: Locale;
   featured?: boolean;
+  index: number;
 }
 
-const { project, locale, featured = false } = Astro.props;
+const { project, locale, featured = false, index } = Astro.props;
 ---
 
 {featured && (
   <article
-    class="rounded-xl border p-8 shadow-sm transition-shadow hover:shadow-md"
+    class="rounded-none border p-8 transition-colors hover:border-[var(--color-ink)]"
     style="background-color: var(--color-surface); border-color: var(--color-border); border-left: 4px solid var(--color-accent);"
   >
-    <span class="mb-3 block font-mono text-xs" style="color: var(--color-accent);">
-      // featured
+    <span class="mb-3 block font-mono text-xs" style="color: var(--color-ink-muted);">
+      {String(index + 1).padStart(2, '0')}
     </span>
     <h3
       class="mb-3 text-2xl font-bold tracking-tight"
@@ -29,13 +29,7 @@ const { project, locale, featured = false } = Astro.props;
     <p class="mb-5 text-sm leading-relaxed" style="color: var(--color-ink-soft);">
       {project.description[locale]}
     </p>
-    <ul class="mb-5 flex flex-wrap gap-2" aria-label="Tech stack">
-      {project.stack.map((tag) => (
-        <li>
-          <Pill label={tag} variant="solid" />
-        </li>
-      ))}
-    </ul>
+    <p class="mb-5 font-mono text-xs" style="color: var(--color-ink-muted);">{project.stack.join(' · ')}</p>
     <div class="flex flex-wrap gap-3 text-sm">
       {project.liveUrl && (
         <a
@@ -65,9 +59,12 @@ const { project, locale, featured = false } = Astro.props;
 
 {!featured && (
   <article
-    class="rounded-xl border bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+    class="rounded-none border bg-white p-6 transition-colors hover:border-[var(--color-ink)]"
     style="border-color: var(--color-border);"
   >
+    <span class="mb-3 block font-mono text-xs" style="color: var(--color-ink-muted);">
+      {String(index + 1).padStart(2, '0')}
+    </span>
     <h3
       class="mb-3 text-lg font-semibold tracking-tight"
       style="color: var(--color-ink);"
@@ -77,13 +74,7 @@ const { project, locale, featured = false } = Astro.props;
     <p class="mb-5 text-sm leading-relaxed" style="color: var(--color-ink-soft);">
       {project.description[locale]}
     </p>
-    <ul class="mb-4 flex flex-wrap gap-2" aria-label="Tech stack">
-      {project.stack.map((tag) => (
-        <li>
-          <Pill label={tag} variant="ghost" />
-        </li>
-      ))}
-    </ul>
+    <p class="mb-4 font-mono text-xs" style="color: var(--color-ink-muted);">{project.stack.join(' · ')}</p>
     <div class="flex flex-wrap gap-3 text-sm">
       {project.liveUrl && (
         <a

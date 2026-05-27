@@ -3,7 +3,6 @@ export interface TranslationShape {
     about: string;
     projects: string;
     skills: string;
-    contact: string;
     switchTo: string;
     switchAria: string;
     openMenu: string;
@@ -35,11 +34,6 @@ export interface TranslationShape {
   skills: {
     heading: string;
   };
-  contact: {
-    heading: string;
-    intro: string;
-    emailCta: string;
-  };
   footer: {
     credit: string;
   };
@@ -54,7 +48,6 @@ export const en: TranslationShape = {
     about: 'About',
     projects: 'Projects',
     skills: 'Skills',
-    contact: 'Contact',
     switchTo: 'ES',
     switchAria: 'Switch to Spanish',
     openMenu: 'Open navigation menu',
@@ -85,11 +78,6 @@ export const en: TranslationShape = {
   },
   skills: {
     heading: 'Skills',
-  },
-  contact: {
-    heading: 'Contact',
-    intro: "I'm open to interesting projects, collaborations, and conversations about architecture and engineering. Reach out directly.",
-    emailCta: 'kevin.quiroga.sanchez@gmail.com',
   },
   footer: {
     credit: 'Built with Astro',

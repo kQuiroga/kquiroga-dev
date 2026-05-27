@@ -5,7 +5,6 @@ export const es: TranslationShape = {
     about: 'Sobre mí',
     projects: 'Proyectos',
     skills: 'Habilidades',
-    contact: 'Contacto',
     switchTo: 'EN',
     switchAria: 'Cambiar a inglés',
     openMenu: 'Abrir menú de navegación',
@@ -36,11 +35,6 @@ export const es: TranslationShape = {
   },
   skills: {
     heading: 'Habilidades',
-  },
-  contact: {
-    heading: 'Contacto',
-    intro: 'Estoy abierto a proyectos interesantes, colaboraciones y conversaciones sobre arquitectura e ingeniería. Escríbeme directamente.',
-    emailCta: 'kevin.quiroga.sanchez@gmail.com',
   },
   footer: {
     credit: 'Construido con Astro',
