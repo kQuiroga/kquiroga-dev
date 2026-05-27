@@ -5,9 +5,12 @@ import tailwindcss from '@tailwindcss/vite';
 
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kquiroga.dev',
+
   integrations: [
     sitemap({
       i18n: {
@@ -19,9 +22,11 @@ export default defineConfig({
       },
     }),
   ],
+
   vite: {
     plugins: [tailwindcss()]
   },
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'es'],
@@ -30,4 +35,6 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
+
+  adapter: cloudflare(),
 });
