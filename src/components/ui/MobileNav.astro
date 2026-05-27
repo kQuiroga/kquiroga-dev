@@ -1,0 +1,160 @@
+---
+import LanguageSwitcher from '../LanguageSwitcher.astro';
+import type { Locale, Translations } from '../../i18n/index';
+
+interface Props {
+  links: Array<{ label: string; href: string }>;
+  locale: Locale;
+  tNav: Translations['nav'];
+}
+
+const { links, locale, tNav } = Astro.props;
+---
+
+<div class="sm:hidden">
+  <button
+    type="button"
+    id="mobile-nav-toggle"
+    class="sm:hidden rounded-md p-2 text-neutral-700 hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+    aria-expanded="false"
+    aria-controls="mobile-nav-panel"
+    aria-label={tNav.openMenu}
+    data-label-open={tNav.openMenu}
+    data-label-close={tNav.closeMenu}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+
+  <div
+    id="mobile-nav-panel"
+    class="hidden absolute left-0 right-0 top-14 z-40 border-b border-neutral-100 bg-white px-6 py-4 shadow-sm"
+    aria-hidden="true"
+  >
+    <ul class="flex flex-col gap-4">
+      {
+        links.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              class="block text-sm text-neutral-700 transition-colors hover:text-neutral-900"
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mt-4 pt-4 border-t border-neutral-100">
+      <LanguageSwitcher currentLocale={locale} label={tNav.switchTo} aria={tNav.switchAria} />
+    </div>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById("mobile-nav-toggle") as HTMLButtonElement;
+  const panel = document.getElementById("mobile-nav-panel") as HTMLDivElement;
+
+  let isOpen = false;
+
+  function getFocusables(): HTMLElement[] {
+    return [
+      toggle,
+      ...Array.from(panel.querySelectorAll("a")),
+    ] as HTMLElement[];
+  }
+
+  function open() {
+    isOpen = true;
+    panel.classList.remove("hidden");
+    panel.setAttribute("aria-hidden", "false");
+    toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-label", toggle.dataset.labelClose ?? "Close navigation menu");
+    const focusables = getFocusables();
+    if (focusables[1]) {
+      (focusables[1] as HTMLElement).focus();
+    }
+  }
+
+  function close() {
+    isOpen = false;
+    panel.classList.add("hidden");
+    panel.setAttribute("aria-hidden", "true");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", toggle.dataset.labelOpen ?? "Open navigation menu");
+    toggle.focus();
+  }
+
+  toggle.addEventListener("click", () => {
+    if (isOpen) {
+      close();
+    } else {
+      open();
+    }
+  });
+
+  panel.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (!isOpen) return;
+
+    const focusables = getFocusables();
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement as HTMLElement;
+
+    if (e.key === "Escape") {
+      e.preventDefault();
+      close();
+      return;
+    }
+
+    if (e.key === "Tab") {
+      if (e.shiftKey) {
+        if (active === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  });
+
+  toggle.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (!isOpen) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      close();
+    }
+    if (e.key === "Tab" && e.shiftKey) {
+      const focusables = getFocusables();
+      const last = focusables[focusables.length - 1];
+      if (document.activeElement === toggle) {
+        e.preventDefault();
+        last.focus();
+      }
+    }
+  });
+
+  panel.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      close();
+    });
+  });
+</script>

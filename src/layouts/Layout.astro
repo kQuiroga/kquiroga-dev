@@ -1,0 +1,70 @@
+---
+import "../styles/global.css";
+import { socials } from "../data/socials";
+
+interface Props {
+  lang: 'en' | 'es';
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+}
+
+const {
+  lang,
+  title = "Kevin Quiroga — Full-stack Developer & Software Architect",
+  description = "Full-stack developer and software architect. Building digital products that actually work.",
+  ogImage,
+  canonical,
+} = Astro.props;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Kevin Quiroga",
+  url: "https://kquiroga.dev",
+  jobTitle: "Full-stack Developer & Software Architect",
+  sameAs: socials.map((s) => s.url),
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem('kq-locale');
+        var current = document.documentElement.lang;
+        var target = stored || (navigator.language && navigator.language.startsWith('es') ? 'es' : 'en');
+        if (target !== current) {
+          location.assign(target === 'es' ? '/es/' : '/');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {ogImage && (
+      <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    )}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    {canonical && (
+      <link rel="canonical" href={canonical} />
+    )}
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  </head>
+  <body class="bg-white text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white">
+    <slot />
+  </body>
+</html>

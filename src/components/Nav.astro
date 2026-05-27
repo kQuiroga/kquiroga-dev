@@ -1,0 +1,50 @@
+---
+import MobileNav from "./ui/MobileNav.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import type { Locale, Translations } from '../i18n/index';
+
+interface Props {
+  locale: Locale;
+  tNav: Translations['nav'];
+}
+
+const { locale, tNav } = Astro.props;
+
+const links = [
+  { label: tNav.about, href: "#about" },
+  { label: tNav.projects, href: "#projects" },
+  { label: tNav.skills, href: "#skills" },
+  { label: tNav.contact, href: "#contact" },
+];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 border-b border-neutral-100 bg-white/80 backdrop-blur-sm"
+>
+  <nav class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+    <a
+      href="/"
+      class="text-sm font-semibold tracking-tight text-neutral-900 hover:opacity-70 transition-opacity"
+    >
+      kquiroga.dev
+    </a>
+    <MobileNav links={links} locale={locale} tNav={tNav} />
+    <ul class="hidden items-center gap-6 sm:flex">
+      {
+        links.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              class="text-sm text-neutral-500 transition-colors hover:text-neutral-900"
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="hidden sm:flex items-center">
+      <LanguageSwitcher currentLocale={locale} label={tNav.switchTo} aria={tNav.switchAria} />
+    </div>
+  </nav>
+</header>

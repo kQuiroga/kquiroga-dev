@@ -1,0 +1,40 @@
+---
+import type { TranslationShape } from '../../i18n/en';
+
+interface Props {
+  t: TranslationShape['hero'];
+}
+
+const { t } = Astro.props;
+---
+
+<section class="flex min-h-screen flex-col justify-center px-6 pt-14">
+  <div class="mx-auto max-w-5xl w-full">
+    <p class="mb-6 text-sm font-medium tracking-widest text-neutral-400 uppercase">
+      {t.location}
+    </p>
+    <h1 class="mb-6 text-6xl sm:text-8xl font-bold tracking-tighter text-neutral-900 leading-none">
+      Kevin<br />Quiroga
+    </h1>
+    <p class="mb-4 text-lg sm:text-xl text-neutral-500 font-medium">
+      {t.role}
+    </p>
+    <p class="mb-12 max-w-lg text-base text-neutral-400 leading-relaxed">
+      {t.tagline}
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a
+        href="#projects"
+        class="rounded-md bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+      >
+        {t.primaryCta}
+      </a>
+      <a
+        href="#contact"
+        class="rounded-md border border-neutral-200 px-6 py-3 text-sm font-medium text-neutral-600 transition-colors hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+      >
+        {t.secondaryCta}
+      </a>
+    </div>
+  </div>
+</section>

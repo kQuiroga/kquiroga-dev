@@ -1,17 +1,11 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import PortfolioPage from '../components/PortfolioPage.astro';
+import { useTranslations } from '../i18n/index';
 
+const t = useTranslations('en');
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout lang="en" title={t.meta.title} description={t.meta.description} canonical="https://kquiroga.dev/">
+  <PortfolioPage locale="en" />
+</Layout>
