@@ -21,15 +21,13 @@ const manifestLines = [
 
 <section class="flex min-h-screen flex-col justify-center px-6 pt-14">
   <div class="mx-auto max-w-5xl w-full">
-    <!-- Name — Fraunces display serif -->
-    <h1 class="mb-4 text-5xl sm:text-7xl font-medium tracking-tight leading-none text-ink">
-      Kevin Quiroga
-    </h1>
+    <!-- Name eyebrow — slightly larger, mono, soft -->
+    <p class="mb-4 font-mono text-base text-ink-soft">Kevin Quiroga</p>
 
-    <!-- Role eyebrow — JetBrains Mono -->
-    <p class="mb-8 font-mono text-sm" style="color: var(--color-ink-muted);">
-      {t.role}
-    </p>
+    <!-- Tagline — Fraunces light, more restrained -->
+    <h1 class="mb-10 font-display font-light text-2xl sm:text-3xl leading-snug tracking-tight text-ink">
+      {t.tagline}
+    </h1>
 
     <!-- Typed manifest block — SSR-rendered, full text always in DOM -->
     <pre
@@ -37,12 +35,12 @@ const manifestLines = [
       class="mb-8 font-mono text-sm leading-relaxed overflow-x-auto"
       style="color: var(--color-ink);"
       aria-label="Developer manifest"
-    >{manifestLines.map((line, i) => (
+    >{manifestLines.filter(l => l.key !== 'name').map((line, i, arr) => (
       <span
         data-line
         data-text={line.text}
         class="block"
-      >{line.text}{i === manifestLines.length - 1 && (
+      >{line.text}{i === arr.length - 1 && (
         <span class="caret" aria-hidden="true">▮</span>
       )}</span>
     ))}</pre>

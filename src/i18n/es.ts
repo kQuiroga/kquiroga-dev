@@ -14,7 +14,7 @@ export const es: TranslationShape = {
   hero: {
     location: 'A Coruña, España',
     role: 'Senior .NET Developer & Arquitecto de Software',
-    tagline: 'Diseñando sistemas distribuidos que escalan y equipos que crecen.',
+    tagline: '.NET, microservicios, y las cosas aburridas que importan.',
     primaryCta: 'Ver mi trabajo',
     secondaryCta: 'Contactar',
     manifest: {
