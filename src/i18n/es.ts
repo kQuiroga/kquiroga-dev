@@ -13,16 +13,16 @@ export const es: TranslationShape = {
   },
   hero: {
     location: 'A Coruña, España',
-    role: 'Desarrollador Full-stack & Arquitecto de Software',
+    role: 'Senior .NET Developer & Arquitecto de Software',
     tagline: 'Diseñando sistemas distribuidos que escalan y equipos que crecen.',
     primaryCta: 'Ver mi trabajo',
     secondaryCta: 'Contactar',
     manifest: {
       whoami: '$ whoami',
       name: '> nombre    : Kevin Quiroga',
-      role: '> rol       : software_architect',
+      role: '> rol       : senior_net_dev · arquitecto',
       location: '> ubicación : A Coruña, ES',
-      focus: '> foco      : sistemas_distribuidos · arquitectura_limpia',
+      focus: '> foco      : sistemas_distribuidos · arquitectura_limpia · ia',
       status: '> estado    : abierto_a_trabajo',
     },
   },
@@ -46,7 +46,7 @@ export const es: TranslationShape = {
     credit: 'Construido con Astro',
   },
   meta: {
-    title: 'Kevin Quiroga — Desarrollador Full-stack & Arquitecto de Software',
-    description: 'Desarrollador full-stack y arquitecto de software. Construyendo productos digitales que realmente funcionan.',
+    title: 'Kevin Quiroga — Senior .NET Developer & Arquitecto de Software',
+    description: 'Desarrollador .NET senior y arquitecto de software. Construyendo sistemas que escalan y equipos que crecen.',
   },
 };
